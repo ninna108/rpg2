@@ -1,0 +1,329 @@
+import React, { useEffect, useState } from "react"
+import { motion } from "framer-motion"
+import {Skull, Sparkles, Users, BookOpen, Flame, Eye} from 'lucide-react'
+
+function App() {
+  const [scrollY, setScrollY] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY)
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 60 },
+    visible: { opacity: 1, y: 0 }
+  }
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  }
+
+  const seasons = [
+    {
+      title: "Ordem Paranormal: Calamidade",
+      description: "A primeira temporada que deu início a tudo. Investigadores enfrentam entidades sobrenaturais em uma cidade amaldiçoada.",
+      year: "2020"
+    },
+    {
+      title: "Desconjuração",
+      description: "Uma equipe especial investiga eventos paranormais ligados ao Outro Lado, revelando segredos obscuros.",
+      year: "2021"
+    },
+    {
+      title: "Ordem Paranormal: Quarentena",
+      description: "Isolados em uma instalação secreta, os investigadores lutam pela sobrevivência contra forças desconhecidas.",
+      year: "2022"
+    },
+    {
+      title: "Sinais do Outro Lado",
+      description: "A mais recente saga que expande o universo paranormal com novos mistérios e ameaças aterrorizantes.",
+      year: "2023"
+    }
+  ]
+
+  const elements = [
+    {
+      icon: <Skull className="w-8 h-8" />,
+      name: "Morte",
+      description: "O elemento que representa o fim, a escuridão e o desconhecido."
+    },
+    {
+      icon: <Flame className="w-8 h-8" />,
+      name: "Energia",
+      description: "Poder destrutivo e incontrolável que consome tudo."
+    },
+    {
+      icon: <Eye className="w-8 h-8" />,
+      name: "Conhecimento",
+      description: "Verdades proibidas que destroem a sanidade."
+    },
+    {
+      icon: <Sparkles className="w-8 h-8" />,
+      name: "Sangue",
+      description: "A essência da vida distorcida em ritual macabro."
+    }
+  ]
+
+  return (
+    <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden">
+      {/* Hero Section */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-gradient-to-b from-[#1a1a1a] via-[#0a0a0a] to-[#0a0a0a]"
+          style={{
+            transform: `translateY(${scrollY * 0.5}px)`
+          }}
+        />
+        
+        {/* Animated particles */}
+        <div className="absolute inset-0">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-red-600 rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`
+              }}
+              animate={{
+                opacity: [0, 1, 0],
+                scale: [0, 1.5, 0]
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 2
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-red-600 via-red-500 to-amber-500 bg-clip-text text-transparent">
+              ORDEM PARANORMAL
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+              Adentre o universo de RPG criado por Cellbit, onde o terror se encontra com o desconhecido
+            </p>
+            <motion.button
+              className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-red-600/50"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Explore o Outro Lado
+            </motion.button>
+          </motion.div>
+        </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <div className="w-6 h-10 border-2 border-gray-500 rounded-full flex items-start justify-center p-2">
+            <div className="w-1 h-3 bg-red-600 rounded-full" />
+          </div>
+        </motion.div>
+      </section>
+
+      {/* About Section */}
+      <section className="py-20 px-4 relative">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUp}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-center">
+              O Que é <span className="text-red-600">Ordem Paranormal</span>?
+            </h2>
+            <div className="grid md:grid-cols-2 gap-8 mt-12">
+              <div className="bg-[#1a1a1a] p-8 rounded-lg border border-red-900/20 hover:border-red-600/50 transition-all duration-300">
+                <BookOpen className="w-12 h-12 text-red-600 mb-4" />
+                <h3 className="text-2xl font-bold mb-4">Uma História Única</h3>
+                <p className="text-gray-400 leading-relaxed">
+                  Ordem Paranormal é um universo de RPG de mesa criado por Cellbit, misturando terror cósmico, 
+                  investigação paranormal e narrativas cinematográficas. Cada temporada traz uma nova história 
+                  interconectada no mesmo universo sombrio.
+                </p>
+              </div>
+              <div className="bg-[#1a1a1a] p-8 rounded-lg border border-red-900/20 hover:border-red-600/50 transition-all duration-300">
+                <Users className="w-12 h-12 text-amber-500 mb-4" />
+                <h3 className="text-2xl font-bold mb-4">Sistema Único</h3>
+                <p className="text-gray-400 leading-relaxed">
+                  Desenvolvido especificamente para o cenário, o sistema Ordem Paranormal RPG combina mecânicas 
+                  de d20 com elementos de sanidade, rituais ocultos e elementos paranormais que moldam o destino 
+                  dos personagens.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Seasons Section */}
+      <section className="py-20 px-4 bg-[#0f0f0f]">
+        <div className="max-w-6xl mx-auto">
+          <motion.h2
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="text-4xl md:text-5xl font-bold mb-12 text-center"
+          >
+            Temporadas <span className="text-red-600">Épicas</span>
+          </motion.h2>
+          
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid md:grid-cols-2 gap-6"
+          >
+            {seasons.map((season, index) => (
+              <motion.div
+                key={index}
+                variants={fadeInUp}
+                className="bg-[#1a1a1a] p-6 rounded-lg border border-gray-800 hover:border-red-600/50 transition-all duration-300 hover:shadow-lg hover:shadow-red-600/10 cursor-pointer group"
+              >
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="text-xl font-bold group-hover:text-red-600 transition-colors">
+                    {season.title}
+                  </h3>
+                  <span className="text-amber-500 font-semibold">{season.year}</span>
+                </div>
+                <p className="text-gray-400">{season.description}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Elements Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <motion.h2
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="text-4xl md:text-5xl font-bold mb-12 text-center"
+          >
+            Os <span className="text-red-600">Elementos</span> Paranormais
+          </motion.h2>
+          
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid md:grid-cols-4 gap-6"
+          >
+            {elements.map((element, index) => (
+              <motion.div
+                key={index}
+                variants={fadeInUp}
+                className="bg-[#1a1a1a] p-6 rounded-lg border border-gray-800 hover:border-red-600/50 transition-all duration-300 text-center hover:scale-105 cursor-pointer"
+              >
+                <div className="flex justify-center mb-4 text-red-600">
+                  {element.icon}
+                </div>
+                <h3 className="text-xl font-bold mb-2">{element.name}</h3>
+                <p className="text-gray-400 text-sm">{element.description}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Community Section */}
+      <section className="py-20 px-4 bg-gradient-to-b from-[#0a0a0a] to-[#1a1a1a]">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Junte-se à <span className="text-red-600">Comunidade</span>
+            </h2>
+            <p className="text-xl text-gray-400 mb-8">
+              Milhares de fãs ao redor do mundo compartilham suas histórias, personagens e experiências no universo de Ordem Paranormal
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <motion.button
+                className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-red-600/50"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Discord da Comunidade
+              </motion.button>
+              <motion.button
+                className="bg-transparent border-2 border-red-600 hover:bg-red-600/10 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Assistir no YouTube
+              </motion.button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-[#0a0a0a] border-t border-gray-800 py-12 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 mb-8">
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-red-600">Ordem Paranormal</h3>
+              <p className="text-gray-400 text-sm">
+                Site dedicado ao universo de RPG criado por Cellbit. Explore o terror e o desconhecido.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold mb-4">Links Rápidos</h3>
+              <ul className="space-y-2 text-gray-400 text-sm">
+                <li><a href="#" className="hover:text-red-600 transition-colors">Temporadas</a></li>
+                <li><a href="#" className="hover:text-red-600 transition-colors">Personagens</a></li>
+                <li><a href="#" className="hover:text-red-600 transition-colors">Sistema de Jogo</a></li>
+                <li><a href="#" className="hover:text-red-600 transition-colors">Comunidade</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold mb-4">Redes Sociais</h3>
+              <ul className="space-y-2 text-gray-400 text-sm">
+                <li><a href="#" className="hover:text-red-600 transition-colors">YouTube - Cellbit</a></li>
+                <li><a href="#" className="hover:text-red-600 transition-colors">Twitch</a></li>
+                <li><a href="#" className="hover:text-red-600 transition-colors">Twitter</a></li>
+                <li><a href="#" className="hover:text-red-600 transition-colors">Discord</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
+            <p>© 2024 Site não oficial - Criado por fãs para fãs de Ordem Paranormal</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  )
+}
+
+export default App
